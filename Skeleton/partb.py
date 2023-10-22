@@ -1,11 +1,20 @@
 import csv
-
+# Import time module to handle time conversions
+import time
+# Import calendar module to handle calendar conversions
+import calendar
 """
     Part B
     Please provide definitions for the following functions *WITH EXCEPTION HANDLERS*
 """
 
+"""
+Please note: I do not use this file to do the testing, I used the unit tests which is a more efficient way and 
+more likely to be the industry standard. Therefore, the main part only contains the import file part, but not the 
+actual testing of the functions. """
 
+
+# Define a Exception_Handler class
 class Exception_Handler(Exception):
     def __init__(self, value):
         self.parameter = value
@@ -20,21 +29,40 @@ class Exception_Handler(Exception):
 # end_date: string in "dd/mm/yyyy" format
 
 def highest_price(data, start_date, end_date):
-    # start_timestamp: the timestamp of the start date
-    start_timestamp = calendar.timegm(time.strptime(start_date, "%d/%m/%Y"))
-    # end_timestamp: the timestamp of the end date
-    end_timestamp = calendar.timegm(time.strptime(end_date, "%d/%m/%Y"))
+    # Exception handling of the start date and end date
+    try:
+        # start_timestamp: the timestamp of the start date
+        start_timestamp = calendar.timegm(time.strptime(start_date, "%d/%m/%Y"))
+        # end_timestamp: the timestamp of the end date
+        end_timestamp = calendar.timegm(time.strptime(end_date, "%d/%m/%Y"))
+    except ValueError as e:
+        print("Error: invalid date value")
+    try:
+        if end_timestamp < start_timestamp:
+            raise Exception_Handler("Error: end date is before start date")
+    except Exception_Handler as e:
+        print(e)
+    try:
+        if end_timestamp > data[-1]['time']:
+            raise Exception_Handler("Error: date value is out of range")
+        if start_timestamp < data[0]['time']:
+            raise Exception_Handler("Error: date value is out of range")
+    except Exception_Handler as e:
+        print(e)
     # highest: the return value, which means highest_price
     highest = 0.0
-
-    for i in data:
-        if int(i['time']) < start_timestamp:
-            continue
-        if int(i['time']) > end_timestamp:
-            break
-        if float(i['high']) > highest:
-            # if the high price is higher than the highest price, update the highest price
-            highest = float(i['high'])
+    # Exception handling of the missing column
+    try:
+        for i in data:
+            if int(i['time']) < start_timestamp:
+                continue
+            if int(i['time']) > end_timestamp:
+                break
+            if float(i['high']) > highest:
+                # if the high price is higher than the highest price, update the highest price
+                highest = float(i['high'])
+    except KeyError as e:
+        print("Error: requested column is missing from dataset")
     return highest
 
 
@@ -43,30 +71,51 @@ def highest_price(data, start_date, end_date):
 # start_date: string in "dd/mm/yyyy" format
 # start_date: string in "dd/mm/yyyy" format
 def lowest_price(data, start_date, end_date):
-    # replace None with an appropriate return value
-    # start_timestamp: the timestamp of the start date
-    start_timestamp = calendar.timegm(time.strptime(start_date, "%d/%m/%Y"))
-    # end_timestamp: the timestamp of the end date
-    end_timestamp = calendar.timegm(time.strptime(end_date, "%d/%m/%Y"))
+    # Exception handling of the start date and end date
+    try:
+        # replace None with an appropriate return value
+        # start_timestamp: the timestamp of the start date
+        start_timestamp = calendar.timegm(time.strptime(start_date, "%d/%m/%Y"))
+        # end_timestamp: the timestamp of the end date
+        end_timestamp = calendar.timegm(time.strptime(end_date, "%d/%m/%Y"))
+    except ValueError as e:
+        print("Error: invalid date value")
+    try:
+        if end_timestamp < start_timestamp:
+            raise Exception_Handler("Error: end date is before start date")
+    except Exception_Handler as e:
+        print(e)
+    try:
+        if end_timestamp > data[-1]['time']:
+            raise Exception_Handler("Error: date value is out of range")
+        if start_timestamp < data[0]['time']:
+            raise Exception_Handler("Error: date value is out of range")
+    except Exception_Handler as e:
+        print(e)
     # lowest: the return value, which means lowest_price
     lowest = 0.0
     # For Initial a lowest price value
     flag = True
     # for loop to find the lowest price
-    for i in data:
-        # if the time is before the start date, continue
-        if int(i['time']) < start_timestamp:
-            continue
-        # if the time is after the end date, break
-        if int(i['time']) > end_timestamp:
-            break
-        # if the time is between the start date and the end date, set the flag to True
-        if start_timestamp <= int(i['time']) <= end_timestamp and flag:
-            lowest = float(i['low'])
-            flag = False
-        # if the low price is lower than the lowest price, update the lowest price
-        if float(i['low']) < lowest:
-            lowest = float(i['low'])
+    # Exception handling of the missing column
+    try:
+        for i in data:
+            # if the time is before the start date, continue
+            if int(i['time']) < start_timestamp:
+                continue
+            # if the time is after the end date, break
+            if int(i['time']) > end_timestamp:
+                break
+            # if the time is between the start date and the end date, set the flag to True
+            if start_timestamp <= int(i['time']) <= end_timestamp and flag:
+                lowest = float(i['low'])
+                flag = False
+            # if the low price is lower than the lowest price, update the lowest price
+            if float(i['low']) < lowest:
+                lowest = float(i['low'])
+    except KeyError as e:
+        print("Error: requested column is missing from dataset")
+
     return lowest
 
 
@@ -75,24 +124,44 @@ def lowest_price(data, start_date, end_date):
 # start_date: string in "dd/mm/yyyy" format
 # start_date: string in "dd/mm/yyyy" format
 def max_volume(data, start_date, end_date):
-    # replace None with an appropriate return value
-    # start_timestamp: the timestamp of the start date
-    start_timestamp = calendar.timegm(time.strptime(start_date, "%d/%m/%Y"))
-    # end_timestamp: the timestamp of the end date
-    end_timestamp = calendar.timegm(time.strptime(end_date, "%d/%m/%Y"))
+    # Exception handling of the start date and end date
+    try:
+        # replace None with an appropriate return value
+        # start_timestamp: the timestamp of the start date
+        start_timestamp = calendar.timegm(time.strptime(start_date, "%d/%m/%Y"))
+        # end_timestamp: the timestamp of the end date
+        end_timestamp = calendar.timegm(time.strptime(end_date, "%d/%m/%Y"))
+    except ValueError as e:
+        print("Error: invalid date value")
+    try:
+        if end_timestamp < start_timestamp:
+            raise Exception_Handler("Error: end date is before start date")
+    except Exception_Handler as e:
+        print(e)
+    try:
+        if end_timestamp > data[-1]['time']:
+            raise Exception_Handler("Error: date value is out of range")
+        if start_timestamp < data[0]['time']:
+            raise Exception_Handler("Error: date value is out of range")
+    except Exception_Handler as e:
+        print(e)
     # max_volume: the return value, which means max_volume
     max_vol = 0.0
     # for loop to find the lowest price
-    for i in data:
-        # if the time is before the start date, continue
-        if int(i['time']) < start_timestamp:
-            continue
-        # if the time is after the end date, break
-        if int(i['time']) > end_timestamp:
-            break
-        # if the volume is higher than the max volume, update the max volume
-        if max_vol < float(i['volumefrom']):
-            max_vol = float(i['volumefrom'])
+    # Exception handling of the missing column
+    try:
+        for i in data:
+            # if the time is before the start date, continue
+            if int(i['time']) < start_timestamp:
+                continue
+            # if the time is after the end date, break
+            if int(i['time']) > end_timestamp:
+                break
+            # if the volume is higher than the max volume, update the max volume
+            if max_vol < float(i['volumefrom']):
+                max_vol = float(i['volumefrom'])
+    except KeyError as e:
+        print("Error: requested column is missing from dataset")
     return max_vol
 
 
@@ -101,24 +170,44 @@ def max_volume(data, start_date, end_date):
 # start_date: string in "dd/mm/yyyy" format
 # start_date: string in "dd/mm/yyyy" format
 def best_avg_price(data, start_date, end_date):
-    # replace None with an appropriate return value
-    # start_timestamp: the timestamp of the start date
-    start_timestamp = calendar.timegm(time.strptime(start_date, "%d/%m/%Y"))
-    # end_timestamp: the timestamp of the end date
-    end_timestamp = calendar.timegm(time.strptime(end_date, "%d/%m/%Y"))
+    # Exception handling of the start date and end date
+    try:
+        # replace None with an appropriate return value
+        # start_timestamp: the timestamp of the start date
+        start_timestamp = calendar.timegm(time.strptime(start_date, "%d/%m/%Y"))
+        # end_timestamp: the timestamp of the end date
+        end_timestamp = calendar.timegm(time.strptime(end_date, "%d/%m/%Y"))
+    except ValueError as e:
+        print("Error: invalid date value")
+    try:
+        if end_timestamp < start_timestamp:
+            raise Exception_Handler("Error: end date is before start date")
+    except Exception_Handler as e:
+        print(e)
+    try:
+        if end_timestamp > data[-1]['time']:
+            raise Exception_Handler("Error: date value is out of range")
+        if start_timestamp < data[0]['time']:
+            raise Exception_Handler("Error: date value is out of range")
+    except Exception_Handler as e:
+        print(e)
     # best_avg_price: the return value, which means best_avg_price
     best_price = 0.0
     # for loop to find the best price
-    for i in data:
-        # if the time is before the start date, continue
-        if int(i['time']) < start_timestamp:
-            continue
-        # if the time is after the end date, break
-        if int(i['time']) > end_timestamp:
-            break
-        # find the best price
-        if float(i['volumeto']) / float(i['volumefrom']) > best_price:
-            best_price = float(i['volumeto']) / float(i['volumefrom'])
+    # Exception handling of the missing column
+    try:
+        for i in data:
+            # if the time is before the start date, continue
+            if int(i['time']) < start_timestamp:
+                continue
+            # if the time is after the end date, break
+            if int(i['time']) > end_timestamp:
+                break
+            # find the best price
+            if float(i['volumeto']) / float(i['volumefrom']) > best_price:
+                best_price = float(i['volumeto']) / float(i['volumefrom'])
+    except KeyError as e:
+        print("Error: requested column is missing from dataset")
     return best_price
 
 
@@ -127,40 +216,61 @@ def best_avg_price(data, start_date, end_date):
 # start_date: string in "dd/mm/yyyy" format
 # start_date: string in "dd/mm/yyyy" format
 def moving_average(data, start_date, end_date):
-    # replace None with an appropriate return value
-    # start_timestamp: the timestamp of the start date
-    start_timestamp = calendar.timegm(time.strptime(start_date, "%d/%m/%Y"))
-    # end_timestamp: the timestamp of the end date
-    end_timestamp = calendar.timegm(time.strptime(end_date, "%d/%m/%Y"))
+    # Exception handling of the start date and end date
+    try:
+        # replace None with an appropriate return value
+        # start_timestamp: the timestamp of the start date
+        start_timestamp = calendar.timegm(time.strptime(start_date, "%d/%m/%Y"))
+        # end_timestamp: the timestamp of the end date
+        end_timestamp = calendar.timegm(time.strptime(end_date, "%d/%m/%Y"))
+    except ValueError as e:
+        print("Error: invalid date value")
+    try:
+        if end_timestamp < start_timestamp:
+            raise Exception_Handler("Error: end date is before start date")
+    except Exception_Handler as e:
+        print(e)
+    try:
+        if end_timestamp > data[-1]['time']:
+            raise Exception_Handler("Error: date value is out of range")
+        if start_timestamp < data[0]['time']:
+            raise Exception_Handler("Error: date value is out of range")
+    except Exception_Handler as e:
+        print(e)
     # best_avg_price: the return value, which means best_avg_price
     avg = 0.0
     # avg list
     avg_list = []
     # for loop to find the best price
-    for i in data:
-        # if the time is before the start date, continue
-        if int(i['time']) < start_timestamp:
-            continue
-        # if the time is after the end date, break
-        if int(i['time']) > end_timestamp:
-            break
-        # find the best price
-        avg_list.append(float(i['volumeto']) / float(i['volumefrom']))
+    # Exception handling of the missing column
+    try:
+        for i in data:
+            # if the time is before the start date, continue
+            if int(i['time']) < start_timestamp:
+                continue
+            # if the time is after the end date, break
+            if int(i['time']) > end_timestamp:
+                break
+            # find the best price
+            avg_list.append(float(i['volumeto']) / float(i['volumefrom']))
+    except KeyError as e:
+        print("Error: requested column is missing from dataset")
     # calculate the average and to two decimal places
     avg = round(sum(avg_list) / len(avg_list), 2)
     return avg
 
 
-# Replace the body of this main function for your testing purposes
+# Please note:
 if __name__ == "__main__":
     # Start the program
-
-    # Example variable initialization
     # data is always the cryptocompare_btc.csv read in using a DictReader
-
     data = []
-    with open("cryptocompare_btc.csv", "r") as f:
-        reader = csv.DictReader(f)
-        data = [r for r in reader]
-
+    # Exception handling of the missing file
+    try:
+        with open("../cryptocompare_btc.csv", "r") as f:
+            reader = csv.DictReader(f)
+            data = [r for r in reader]
+    except FileNotFoundError:
+        print("Error: dataset not found")
+    highest_price(data, "01/01/2016", "31/01/2015")
     pass
