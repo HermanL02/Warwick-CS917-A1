@@ -1,0 +1,2 @@
+1. I found the error can be handled correctly when using __main__, but there is still an error when I use the unit test file, why? Do I need to fix it?
+2. What should I put in the main function? If I only import the file, is that ok?
