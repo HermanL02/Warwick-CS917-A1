@@ -60,5 +60,6 @@ class Test(unittest.TestCase):
     def test_moving_average3(self):
         self.assertEqual(824.83, partb.moving_average(self.data, "01/12/2016", "31/12/2016"), 'Wrong')
 
+
 if __name__ == '__main__':
     Test.setUpClass()

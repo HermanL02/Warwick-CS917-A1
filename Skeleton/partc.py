@@ -1,8 +1,8 @@
-# Import csv module to handle csv files
+# import csv module to handle csv files
 import csv
-# Import time module to handle time conversions
+# import time module to handle time conversions
 import time
-# Import calendar module to handle calendar conversions
+# import calendar module to handle calendar conversions
 import calendar
 
 """
@@ -22,17 +22,17 @@ def moving_avg_short(data, start_date, end_date):
     end_timestamp = calendar.timegm(time.strptime(end_date, "%d/%m/%Y"))
     # avg_dict: the return value, which means moving_avg_short
     avg_dict = {}
-    # for loop to find the moving average
+    # for loop to find the moving average short
     for i in range(len(data)):
         if int(data[i]['time']) < start_timestamp:
             continue
         if int(data[i]['time']) > end_timestamp:
             break
-        # Define avg_list, total and avg
+        # define avg_list, total and avg
         avg_list = []
         total = 0.0
         avg = 0.0
-        # If "i" is the first 2 days of CSV
+        # if "i" is the first 2 days of CSV
         if i < 2:
             for j in range(i + 1):
                 total += float(data[i]['volumeto']) / float(data[i]['volumefrom'])
@@ -62,11 +62,11 @@ def moving_avg_long(data, start_date, end_date):
             continue
         if int(data[i]['time']) > end_timestamp:
             break
-        # Define avg_list, total and avg
+        # define avg_list, total and avg
         avg_list = []
         total = 0.0
         avg = 0.0
-        # If "i" is the first 10 days of CSV
+        # if "i" is the first 9 days of CSV
         if i < 9:
             for j in range(i + 1):
                 total += float(data[i]['volumeto']) / float(data[i]['volumefrom'])
@@ -92,10 +92,10 @@ def find_buy_list(short_avg_dict, long_avg_dict):
     for i in range(1, len(sorted_keys)):
         current_key = sorted_keys[i]
         prev_key = sorted_keys[i - 1]
-        # The logic is based on the document
+        # the logic comes from the document
         if short_avg_dict[prev_key] < long_avg_dict[prev_key] and short_avg_dict[current_key] > long_avg_dict[
             current_key]:
-            # Convert the timestamp to date
+            # convert the timestamp to date to match the tests
             dt = time.gmtime(current_key)
             time_string = time.strftime("%d/%m/%Y", dt)
             buy_dict[time_string] = 1
@@ -118,7 +118,7 @@ def find_sell_list(short_avg_dict, long_avg_dict):
         # The logic is based on the document
         if short_avg_dict[prev_key] > long_avg_dict[prev_key] and short_avg_dict[current_key] < long_avg_dict[
             current_key]:
-            # Convert the timestamp to date
+            # convert the timestamp to date
             dt = time.gmtime(current_key)
             time_string = time.strftime("%d/%m/%Y", dt)
             sell_dict[time_string] = 1
@@ -136,12 +136,12 @@ def crossover_method(data, start_date, end_date):
     # A list induction is used to find the buy list and sell list easily instead of using the for loop shown below
     # result_dict = find_buy_list(short_avg_dict, long_avg_dict)
     # buy_list = []
-    # for key, value in result_dict.items():
-    # if value == 1:
-    # buy_list.append(key)
-    buy_list = buy_list = [key for key, value in find_buy_list(short_avg_dict, long_avg_dict).items() if value == 1]
+    # for i, j in result_dict.items():
+    # if j == 1:
+    # buy_list.append(i)
+    buy_list = buy_list = [i for i, j in find_buy_list(short_avg_dict, long_avg_dict).items() if j == 1]
     # sell list where find_sell_list dictionary value is 1
-    sell_list = sell_list = [key for key, value in find_sell_list(short_avg_dict, long_avg_dict).items() if value == 1]
+    sell_list = sell_list = [i for i, j in find_sell_list(short_avg_dict, long_avg_dict).items() if j == 1]
     return [list(buy_list), list(sell_list)]
 
 

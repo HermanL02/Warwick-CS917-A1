@@ -1,8 +1,8 @@
-# Import csv module to handle csv files
+# import csv module to handle csv files
 import csv
-# Import time module to handle time conversions
+# import time module to handle time conversions
 import time
-# Import calendar module to handle calendar conversions
+# import calendar module to handle calendar conversions
 import calendar
 
 """Part A 
@@ -39,14 +39,13 @@ def highest_price(data, start_date, end_date):
 # start_date: string in "dd/mm/yyyy" format
 # start_date: string in "dd/mm/yyyy" format
 def lowest_price(data, start_date, end_date):
-    # replace None with an appropriate return value
     # start_timestamp: the timestamp of the start date
     start_timestamp = calendar.timegm(time.strptime(start_date, "%d/%m/%Y"))
     # end_timestamp: the timestamp of the end date
     end_timestamp = calendar.timegm(time.strptime(end_date, "%d/%m/%Y"))
     # lowest: the return value, which means lowest_price
     lowest = 0.0
-    # For Initial a lowest price value
+    # flag: help to define the lowest as the first value within the time range
     flag = True
     # for loop to find the lowest price
     for i in data:
@@ -71,7 +70,6 @@ def lowest_price(data, start_date, end_date):
 # start_date: string in "dd/mm/yyyy" format
 # start_date: string in "dd/mm/yyyy" format
 def max_volume(data, start_date, end_date):
-    # replace None with an appropriate return value
     # start_timestamp: the timestamp of the start date
     start_timestamp = calendar.timegm(time.strptime(start_date, "%d/%m/%Y"))
     # end_timestamp: the timestamp of the end date
@@ -97,7 +95,6 @@ def max_volume(data, start_date, end_date):
 # start_date: string in "dd/mm/yyyy" format
 # start_date: string in "dd/mm/yyyy" format
 def best_avg_price(data, start_date, end_date):
-    # replace None with an appropriate return value
     # start_timestamp: the timestamp of the start date
     start_timestamp = calendar.timegm(time.strptime(start_date, "%d/%m/%Y"))
     # end_timestamp: the timestamp of the end date
@@ -123,7 +120,6 @@ def best_avg_price(data, start_date, end_date):
 # start_date: string in "dd/mm/yyyy" format
 # start_date: string in "dd/mm/yyyy" format
 def moving_average(data, start_date, end_date):
-    # replace None with an appropriate return value
     # start_timestamp: the timestamp of the start date
     start_timestamp = calendar.timegm(time.strptime(start_date, "%d/%m/%Y"))
     # end_timestamp: the timestamp of the end date

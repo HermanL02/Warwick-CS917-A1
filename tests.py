@@ -1,5 +1,6 @@
 import Skeleton.parta as parta
 import Skeleton.partc as partc
+import Skeleton.partd as partd
 import unittest
 import csv
 
@@ -71,6 +72,30 @@ class Test(unittest.TestCase):
     def test_crossover_method3(self):
         answer = [['06/11/2019'], ['04/11/2019', '08/11/2019']]
         self.assertEqual(answer, partc.crossover_method(self.data, "03/11/2019", "14/11/2019"), 'Wrong')
+
+    def test_predict_next_average1(self):
+        x = partd.Investment("04/05/2015", "27/05/2015", self.data)
+        self.assertEqual(237.72045957687828, partd.predict_next_average(x), 'Wrong')
+
+    def test_predict_next_average2(self):
+        x = partd.Investment("01/02/2016", "28/02/2016", self.data)
+        self.assertEqual(441.4238016565723, partd.predict_next_average(x), 'Wrong')
+
+    def test_predict_next_average3(self):
+        x = partd.Investment("08/12/2016", "11/12/2016", self.data)
+        self.assertEqual(778.1930137752934, partd.predict_next_average(x), 'Wrong')
+
+    def test_classify_trend1(self):
+        x = partd.Investment("04/05/2015", "27/05/2015", self.data)
+        self.assertEqual("other", partd.classify_trend(x), 'Wrong')
+
+    def test_classify_trend2(self):
+        x = partd.Investment("01/02/2016", "28/02/2016", self.data)
+        self.assertEqual("increasing", partd.classify_trend(x), 'Wrong')
+
+    def test_classify_trend3(self):
+        x = partd.Investment("08/12/2016", "11/12/2016", self.data)
+        self.assertEqual("increasing", partd.classify_trend(x), 'Wrong')
 
 
 if __name__ == '__main__':

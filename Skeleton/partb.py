@@ -1,9 +1,9 @@
 import csv
-# Import time module to handle time conversions
+# import time module to handle time conversions
 import time
-# Import calendar module to handle calendar conversions
+# import calendar module to handle calendar conversions
 import calendar
-# Import sys (which is mentioned in the FAQ)
+# import sys (which is mentioned in the FAQ)
 import  sys
 """
     Part B
@@ -16,7 +16,7 @@ more likely to be the industry standard. Therefore, the main part only contains 
 actual testing of the functions. """
 
 
-# Define a Exception_Handler class
+# define a Exception_Handler class
 class Exception_Handler(Exception):
     def __init__(self, value):
         self.parameter = value
@@ -31,7 +31,7 @@ class Exception_Handler(Exception):
 # end_date: string in "dd/mm/yyyy" format
 
 def highest_price(data, start_date, end_date):
-    # Exception handling of the start date and end date
+    # exception handling of the start date and end date
     try:
         # start_timestamp: the timestamp of the start date
         start_timestamp = calendar.timegm(time.strptime(start_date, "%d/%m/%Y"))
@@ -46,6 +46,7 @@ def highest_price(data, start_date, end_date):
     except Exception_Handler as e:
         print(e)
         sys.exit()
+    # exception handling of the out of range date
     try:
         if end_timestamp > int(data[-1]['time']):
             raise Exception_Handler("Error: date value is out of range")
@@ -56,7 +57,7 @@ def highest_price(data, start_date, end_date):
         sys.exit()
     # highest: the return value, which means highest_price
     highest = 0.0
-    # Exception handling of the missing column
+    # exception handling of the missing column
     try:
         for i in data:
             if int(i['time']) < start_timestamp:
@@ -77,7 +78,7 @@ def highest_price(data, start_date, end_date):
 # start_date: string in "dd/mm/yyyy" format
 # start_date: string in "dd/mm/yyyy" format
 def lowest_price(data, start_date, end_date):
-    # Exception handling of the start date and end date
+    # exception handling of the start date and end date
     try:
         # replace None with an appropriate return value
         # start_timestamp: the timestamp of the start date
@@ -93,6 +94,7 @@ def lowest_price(data, start_date, end_date):
     except Exception_Handler as e:
         print(e)
         sys.exit()
+    # exception handling of the out of range date
     try:
         if end_timestamp > int(data[-1]['time']):
             raise Exception_Handler("Error: date value is out of range")
@@ -103,10 +105,10 @@ def lowest_price(data, start_date, end_date):
         sys.exit()
     # lowest: the return value, which means lowest_price
     lowest = 0.0
-    # For Initial a lowest price value
+    # flag: help to define the lowest as the first value within the time range
     flag = True
     # for loop to find the lowest price
-    # Exception handling of the missing column
+    # exception handling of the missing column
     try:
         for i in data:
             # if the time is before the start date, continue
@@ -134,7 +136,7 @@ def lowest_price(data, start_date, end_date):
 # start_date: string in "dd/mm/yyyy" format
 # start_date: string in "dd/mm/yyyy" format
 def max_volume(data, start_date, end_date):
-    # Exception handling of the start date and end date
+    # exception handling of the start date and end date
     try:
         # replace None with an appropriate return value
         # start_timestamp: the timestamp of the start date
@@ -144,6 +146,7 @@ def max_volume(data, start_date, end_date):
     except ValueError as e:
         print("Error: invalid date value")
         sys.exit()
+    # exception handling of the out of range date
     try:
         if end_timestamp < start_timestamp:
             raise Exception_Handler("Error: end date is before start date")
@@ -184,7 +187,7 @@ def max_volume(data, start_date, end_date):
 # start_date: string in "dd/mm/yyyy" format
 # start_date: string in "dd/mm/yyyy" format
 def best_avg_price(data, start_date, end_date):
-    # Exception handling of the start date and end date
+    # exception handling of the start date and end date
     try:
         # replace None with an appropriate return value
         # start_timestamp: the timestamp of the start date
@@ -211,7 +214,7 @@ def best_avg_price(data, start_date, end_date):
     # best_avg_price: the return value, which means best_avg_price
     best_price = 0.0
     # for loop to find the best price
-    # Exception handling of the missing column
+    # exception handling of the missing column
     try:
         for i in data:
             # if the time is before the start date, continue
@@ -234,7 +237,7 @@ def best_avg_price(data, start_date, end_date):
 # start_date: string in "dd/mm/yyyy" format
 # start_date: string in "dd/mm/yyyy" format
 def moving_average(data, start_date, end_date):
-    # Exception handling of the start date and end date
+    # exception handling of the start date and end date
     try:
         # replace None with an appropriate return value
         # start_timestamp: the timestamp of the start date
@@ -244,12 +247,14 @@ def moving_average(data, start_date, end_date):
     except ValueError as e:
         print("Error: invalid date value")
         sys.exit()
+    # exception handling of the out of range date
     try:
         if end_timestamp < start_timestamp:
             raise Exception_Handler("Error: end date is before start date")
     except Exception_Handler as e:
         print(e)
         sys.exit()
+    # exception handling of the out of range date
     try:
         if end_timestamp > int(data[-1]['time']):
             raise Exception_Handler("Error: date value is out of range")
