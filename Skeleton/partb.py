@@ -300,5 +300,5 @@ if __name__ == "__main__":
     except FileNotFoundError:
         print("Error: dataset not found")
         sys.exit()
-    highest_price(data, "01/01/2000", "31/01/2016")
+    highest_price(data, "01/012000", "31/01/2016")
     pass
